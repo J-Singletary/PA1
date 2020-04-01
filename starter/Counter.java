@@ -1,5 +1,7 @@
 /**
- * TODO:  Add your name, ID, and email as specified in the instructions
+ * Name: Jared Singletary
+ * PID: A16166835
+ * Email: jsinglet@ucsd.edu
  */
  
 public class Counter {
@@ -39,6 +41,6 @@ public class Counter {
     }
 
     public void reset() {
-        count = 0;
+        count = -1;
     }
 }

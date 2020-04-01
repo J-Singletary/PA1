@@ -1,5 +1,7 @@
 /**
- * TODO:  Add your name, ID, and email as specified in the instructions
+ * Name: Jared Singletary
+ * PID: A16166835
+ * Email: jsinglet@ucsd.edu
  */
 
 import org.junit.*;
@@ -46,8 +48,10 @@ public class CounterTest {
     @Test
     public void testReset() {
         System.out.println("Checking Reset");
-        // TODO: Complete the Test Case to check if the reset 
-        // functionality works as expected.
+        counter.reset();
+        counter2.reset();
+        assertEquals(0, counter.getCount());
+        assertEquals(0, counter2.getCount());
     }
 
     @Test
@@ -63,7 +67,7 @@ public class CounterTest {
             counter2.decrement();
         }
 
-        // TODO: Complete the Test Case to check if the decrement 
-        // functionality works as expected.
+        assertEquals(0, counter.getCount());
+        assertEquals(0, counter2.getCount());
     }
 }

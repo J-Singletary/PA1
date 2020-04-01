@@ -1,6 +1,9 @@
 /**
- * TODO:  Add your name, ID, and email as specified in the instructions
+ * Name: Jared Singletary
+ * PID: A16166835
+ * Email: jsinglet@ucsd.edu
  */
+
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

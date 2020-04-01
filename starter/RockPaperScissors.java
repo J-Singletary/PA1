@@ -2,9 +2,9 @@
  * Class RockPaperScissors. Plays repeated games of Rock Paper Scissors 
  * with a user.
  *
- * Name: TODO
- * ID: TODO
- * Email: TODO
+ * Name: Jared Singletary
+ * ID: A16166835
+ * Email: jsinglet@ucsd.edu
  */
 
 import java.util.ArrayList;
@@ -66,7 +66,56 @@ public class RockPaperScissors {
      * initializes instance variables
      */
     public RockPaperScissors() {
-        // TODO
+        initialCapacity = 5;
+        systemMoves = new String[initialCapacity];
+        userMoves = new ArrayList<>();
+        size = 0;
+        playing = true;
+        totalGames = new Counter();
+        playerWin = new Counter();
+        cpuWin = new Counter();
+        tie = new Counter();
+    }
+/**
+    static String bestCPUMove() {
+        double chancePlayerRock;
+        double chancePlayerScissors;
+        double chancePlayerPaper;
+        int totalRock = 0;
+        int totalScissors = 0;
+        int totalPaper = 0;
+        int total = userMoves.size();
+        for (String move : userMoves) {
+            if (move.equals(ROCK)) {
+                totalRock++;
+            } else if (move.equals(SCISSORS)) {
+                totalScissors++;
+            } else if (move.equals(PAPER)) {
+                totalPaper++;
+            }
+        }
+        chancePlayerRock = totalRock / (double)total;
+        chancePlayerScissors = totalScissors / (double)total;
+        chancePlayerPaper = totalPaper / (double)total;
+        if (chancePlayerRock > chancePlayerPaper && chancePlayerRock > chancePlayerScissors) {
+            return PAPER;
+        } else if (chancePlayerScissors > chancePlayerPaper && chancePlayerScissors > chancePlayerRock) {
+            return ROCK;
+        } else {
+            return SCISSORS;
+        }
+    }
+**/
+    static String randomCPUMove() {
+        Random rand = new Random();
+        int num = rand.nextInt(3);
+        if (num == 0) {
+            return ROCK;
+        } else if (num == 1) {
+            return SCISSORS;
+        } else {
+            return PAPER;
+        }
     }
 
     /**
@@ -75,7 +124,11 @@ public class RockPaperScissors {
      * @return String - "r", "p", or "s"
      */
     static String genCPUMove() {
-        //TODO
+        //if (userMoves.size() == 0) {
+        return randomCPUMove();
+        //} else {
+        //    return bestCPUMove();
+        //}
     }
 
     /**
@@ -84,7 +137,15 @@ public class RockPaperScissors {
      * @return void
      */
     public void expandCapacity() {
-        // TODO
+        int currentSize = this.systemMoves.length;
+        int newSize = currentSize * 2;
+        int count = 0;
+        String[] newSystemMoves = new String[newSize];
+        for (String move : this.systemMoves) {
+            newSystemMoves[count] = move;
+            count++;
+        }
+        this.systemMoves = newSystemMoves.clone();
     }
 
     /**
@@ -94,7 +155,11 @@ public class RockPaperScissors {
      * @return void
      */
     public void addSystemMove(String sysMove) {
-        // TODO
+        if (this.size >= this.systemMoves.length) {
+            expandCapacity();
+        }
+        this.systemMoves[this.size] = sysMove;
+        this.size++;
     }
 
     /**
@@ -106,7 +171,47 @@ public class RockPaperScissors {
      * @return void
      */
     void play(String playerMove, String sysMove) {
-        // TODO : write code for the game
+        if (!playerMove.equals(ROCK) && !playerMove.equals(SCISSORS) && !playerMove.equals(PAPER)) {
+            if(playerMove.equals(QUIT)) {
+                playing = false;
+                end();
+            } else {
+                System.out.println(INVALID_INPUT);
+            }
+        } else {
+            totalGames.increment();
+            userMoves.add(playerMove);
+            addSystemMove(sysMove);
+
+            if (playerMove.equals(ROCK) && sysMove.equals(ROCK)) {
+                tie.increment();
+                System.out.println(ROCK_TIE);
+            } else if (playerMove.equals(ROCK) && sysMove.equals(SCISSORS)) {
+                playerWin.increment();
+                System.out.println(SCISSORS_USR_WIN);
+            } else if (playerMove.equals(ROCK) && sysMove.equals(PAPER)) {
+                cpuWin.increment();
+                System.out.println(PAPER_SYS_WIN);
+            } else if (playerMove.equals(SCISSORS) && sysMove.equals(SCISSORS)) {
+                tie.increment();
+                System.out.println(SCISSORS_TIE);
+            } else if (playerMove.equals(SCISSORS) && sysMove.equals(PAPER)) {
+                playerWin.increment();
+                System.out.println(PAPER_USR_WIN);
+            } else if (playerMove.equals(SCISSORS) && sysMove.equals(ROCK)) {
+                cpuWin.increment();
+                System.out.println(ROCK_SYS_WIN);
+            } else if (playerMove.equals(PAPER) && sysMove.equals(PAPER)) {
+                tie.increment();
+                System.out.println(PAPER_TIE);
+            } else if (playerMove.equals(PAPER) && sysMove.equals(ROCK)) {
+                playerWin.increment();
+                System.out.println(ROCK_USR_WIN);
+            } else if (playerMove.equals(PAPER) && sysMove.equals(SCISSORS)) {
+                cpuWin.increment();
+                System.out.println(SCISSORS_SYS_WIN);
+            }
+        }
     }
 
     /**
